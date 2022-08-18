@@ -4,22 +4,68 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet"> 
+
+
     <link rel="stylesheet" href="reset.css">
     <link rel="stylesheet" href="style.css">
     <script src="./code.js" defer></script> 
     <title>pixel-sketch</title>
 </head>
 <body>
-    <div id="header">
-        <h1>PIXEL-SKETCH</h1>
-    </div>
     <div id="content">
-        <div id="menu">
-            <button>PENCIL</button>
-            <button>RAINBOW</button>
-            <button>ERASER</button>
+        <div id="border">
+            <div id="border2">
+                <div id="window">
+                    <div id="windowbar">
+                        <div id="title">Pixel-Sketch</div>
+                        <div id="buttons">
+                            <div class="tb">
+                                <div class="x"><button>_</button></div>
+                            </div>
+                            <div class="tb">
+                                <div class="x"><button>◻</button></div>
+                            </div>
+                            <div class="tb" id="close">
+                                <div class="x"><button>x</button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="toolbar">
+                        <div>
+                            <div class="tb tool">
+                                <div class="x">
+                                    <button><img src="./pencil.png"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="buttons">
+                            <div class="tb tool">
+                                <div class="x">
+                                    <button id="pencil"><img src="./pencil.png"></button>
+                                </div>
+                            </div>
+                            <div class="tb tool">
+                                <div class="x">
+                                    <button id="raindbow"><img src="./rainbow.png"></button>
+                                </div>
+                            </div>
+                            <div class="tb tool">
+                                <div class="x">
+                                    <button id="eraser"><img src="./eraser.png"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="windowscreen">
+                        <div id="canvas"></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div id="container"></div>
     </div>
     <div id="footer"></div>
 
