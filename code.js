@@ -1,7 +1,7 @@
 let gridSize = 64;
-let pixelSize = (650) / gridSize;
+let pixelSize = (550) / gridSize;
 let drawing = false;
-
+let color = "black";
 
 
 let row = document.createElement('div');
