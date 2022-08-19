@@ -82,7 +82,8 @@ let tab = document.querySelector('.tab');
 let windowOpen = true;
 function windowResize() {
     if (windowOpen === true) {
-        document.querySelector('#border').style.display = "none";
+        document.querySelector('#border').style.opacity = "0";
+        document.querySelector('#border').style.transform = "scale(1, 0) ";
         tab.style.webkitFilter = "brightness(100%)";
         tab.style.borderBottom = "2px solid black";
         tab.style.borderRight = "2px solid black";
@@ -90,7 +91,8 @@ function windowResize() {
         tab.style.borderLeft = "2px solid white";
         windowOpen = false;
     } else {
-        document.getElementById('border').style.display = "inherit";
+        document.getElementById('border').style.opacity = "100";
+        document.querySelector('#border').style.transform = "scale(1, 1)";
         tab.style.webkitFilter = "";
         tab.style.borderBottom = "";
         tab.style.borderRight = "";
