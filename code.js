@@ -1,5 +1,6 @@
-let gridSize = 64;
-let pixelSize = (425) / gridSize;
+let gridSize = 32;
+let canvasWidth = 425;
+let pixelSize = canvasWidth / gridSize;
 let drawing = false;
 let color = "black";
 let lastTool = "pencil";
@@ -8,17 +9,49 @@ let row = document.createElement('div');
 let pixel = document.createElement('div');
 let canvas = document.querySelector('#canvas');
 
-
+function buttonUp(button) {
+    button.style.webkitFilter = "brightness(100%)";
+    button.style.borderBottom = "2px solid black";
+    button.style.borderRight = "2px solid black";
+    button.style.borderTop = "2px solid white";
+    button.style.borderLeft = "2px solid white";
+}
+function buttonDown(button) {
+    button.style.webkitFilter = "brightness(110%)";
+    button.style.borderBottom = "2px solid white";
+    button.style.borderRight = "2px solid white";
+    button.style.borderTop = "2px solid black";
+    button.style.borderLeft = "2px solid black";
+}
 
 // color picker
 let selectColor = document.querySelector('[type="color"]');
-selectColor.value = 'black'
+selectColor.value = '#000000';
 selectColor.addEventListener('input', (e) => {color = e.target.value});
 
 // tool selection
-document.querySelector('#pencil').addEventListener('click', () => {lastTool = "pencil"});
-document.querySelector('#rainbow').addEventListener('click', () => {lastTool = "rainbow"});
-document.querySelector('#eraser').addEventListener('click', () => {lastTool = "eraser"});
+pencil = document.querySelector('.pencil');
+pencil.addEventListener('click', () => {
+    lastTool = "pencil";
+    buttonDown(pencil);
+    buttonUp(rainbow);
+    buttonUp(eraser);
+});
+rainbow = document.querySelector('.rainbow')
+rainbow.addEventListener('click', (e) => {
+    lastTool = "rainbow";
+    buttonDown(rainbow);
+    buttonUp(pencil);
+    buttonUp(eraser);
+});
+eraser = document.querySelector('.eraser');
+eraser.addEventListener('click', (e) => {
+    lastTool = "eraser";
+    buttonDown(eraser);
+    buttonUp(rainbow);
+    buttonUp(pencil);
+});
+
 
 // determine color based on active tool
 function getColor() {
@@ -34,21 +67,26 @@ function getColor() {
 }
 
 // canvas grid construction
-for (i=0; i<gridSize; i++) {
-    row.className = "row";
-    canvas.appendChild(row.cloneNode(true));
-}
-allRows = document.querySelectorAll('.row');
-allRows.forEach((node) => {
+function constructCanvas(){
+    canvas.innerHTML = "";
+    pixelSize = canvasWidth / gridSize;
+
     for (i=0; i<gridSize; i++) {
-        pixel.className = "pixel";
-        pixel.style.minHeight = `${pixelSize}px`; 
-        pixel.style.minWidth = `${pixelSize}px`; 
-        pixel.style.maxHeight = `${pixelSize}px`; 
-        pixel.style.maxWidth = `${pixelSize}px`;
-        // pixel.setAttribute("draggable", false);
-        node.appendChild(pixel.cloneNode(true));
-}});
+        row.className = "row";
+        canvas.appendChild(row.cloneNode(true));
+    }
+    allRows = document.querySelectorAll('.row');
+    allRows.forEach((node) => {
+        for (i=0; i<gridSize; i++) {
+            pixel.className = "pixel";
+            pixel.style.minHeight = `${pixelSize}px`; 
+            pixel.style.minWidth = `${pixelSize}px`; 
+            pixel.style.maxHeight = `${pixelSize}px`; 
+            pixel.style.maxWidth = `${pixelSize}px`;
+            // pixel.setAttribute("draggable", false);
+            node.appendChild(pixel.cloneNode(true));
+}})};
+constructCanvas();
 
 // canvas drawing
 function onClick(e) {
@@ -69,13 +107,27 @@ function onUp() {
 function onDrag() {
     drawing = true;
 };
-document.querySelectorAll('.pixel').forEach( (node) => {
-    node.addEventListener('click', onClick);
-    node.addEventListener('mousedown', onDown);
-    node.addEventListener('mouseover', onHover);
-    node.addEventListener('drag', onDrag);
-});
-document.querySelector('html').addEventListener('mouseup', onUp);
+function addCanvasListeners() {
+    document.querySelectorAll('.pixel').forEach( (node) => {
+        node.addEventListener('click', onClick);
+        node.addEventListener('mousedown', onDown);
+        node.addEventListener('mouseover', onHover);
+        node.addEventListener('drag', onDrag);
+    });
+    document.querySelector('html').addEventListener('mouseup', onUp);
+};
+addCanvasListeners()
+
+// grid slider
+slider = document.querySelector('.slider');
+num = document.querySelector('#num');
+num.innerHTML = slider.value;
+slider.addEventListener('click', () => {
+    num.innerHTML = slider.value; 
+    gridSize = slider.value; 
+    constructCanvas();
+    addCanvasListeners();
+})
 
 // window hiding via taskbar
 let tab = document.querySelector('.tab');
@@ -84,26 +136,17 @@ function windowResize() {
     if (windowOpen === true) {
         document.querySelector('#border').style.opacity = "0";
         document.querySelector('#border').style.transform = "scale(1, 0) ";
-        tab.style.webkitFilter = "brightness(100%)";
-        tab.style.borderBottom = "2px solid black";
-        tab.style.borderRight = "2px solid black";
-        tab.style.borderTop = "2px solid white";
-        tab.style.borderLeft = "2px solid white";
+        buttonUp(tab);
         windowOpen = false;
     } else {
         document.getElementById('border').style.opacity = "100";
         document.querySelector('#border').style.transform = "scale(1, 1)";
-        tab.style.webkitFilter = "";
-        tab.style.borderBottom = "";
-        tab.style.borderRight = "";
-        tab.style.borderTop = "";
-        tab.style.borderLeft = "";
+        buttonDown(tab);
         windowOpen = true;
     }
 }
 tab = document.querySelector('.tab');
 tab.addEventListener('click', windowResize);
-
 
 // clock
 function startTime() {

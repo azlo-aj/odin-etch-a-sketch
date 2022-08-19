@@ -19,7 +19,6 @@
 <body onload="startTime()">
     <div id="content">
         <div id="border">
-            <div id="border2">
                 <div id="window">
                     <div id="windowbar">
                         <div id="title"><img src="./painticon.png" id="icon">Odin Paint</div>
@@ -36,30 +35,29 @@
                         </div>
                     </div>
                     <div id="toolbar">
-                                <input type="color" value="black">
+                                <input type="color" value="black" class="color">
                         <div id="buttons">
-                            <div class="tb tool">
-                                <div class="x">
+                            <div class="tb tool pencil">
                                     <button id="pencil"><img src="./pencil.png"></button>
-                                </div>
                             </div>
-                            <div class="tb tool">
-                                <div class="x">
+                            <div class="tb tool rainbow">
                                     <button id="rainbow"><img src="./rainbow.png"></button>
-                                </div>
                             </div>
-                            <div class="tb tool">
-                                <div class="x">
+                            <div class="tb tool eraser">
                                     <button id="eraser"><img src="./eraser.png"></button>
-                                </div>
+
                             </div>
                         </div>
                     </div>
                     <div id="windowscreen">
                         <div id="canvas"></div>
                     </div>
+                    <div id="resize">
+                        <div class="grid" id="label">Grid Size</div>
+                        <input type="range" min="8" max="64" value="32" class="slider">
+                        <div class="grid" id="num">32</div>
+                    </div>
                 </div>
-            </div>
         </div>
         
     </div>
@@ -76,12 +74,10 @@
                 </div>
             </div>
             <div class="tab">
-
-                        <button id="start">
-                            <img id="github" src="./painticon.png">
-                            untitled - Odin Paint
-                        </button>
-
+                <button id="start">
+                    <img id="github" src="./painticon.png">
+                    untitled - Odin Paint
+                </button>
             </div>
 
         </div>
