@@ -15,13 +15,13 @@
     <script src="./code.js" defer></script> 
     <title>pixel-sketch</title>
 </head>
-<body>
+<body onload="startTime()">
     <div id="content">
         <div id="border">
             <div id="border2">
                 <div id="window">
                     <div id="windowbar">
-                        <div id="title">Pixel-Sketch</div>
+                        <div id="title"><img src="./painticon.png" id="icon">Odin Paint</div>
                         <div id="buttons">
                             <div class="tb">
                                 <div class="x"><button>_</button></div>
@@ -50,7 +50,7 @@
                             </div>
                             <div class="tb tool">
                                 <div class="x">
-                                    <button id="raindbow"><img src="./rainbow.png"></button>
+                                    <button id="rainbow"><img src="./rainbow.png"></button>
                                 </div>
                             </div>
                             <div class="tb tool">
@@ -71,10 +71,15 @@
     <div id="footer">
         <div class="tb">
             <div class="x">
-                <button id="start">Start</button>
+                <a href="https://github.com/azlo-aj">
+                    <button id="start">
+                        <img id="github" src="./github.png">
+                        azlo-aj
+                    </button>
+                </a>
             </div>
         </div>
-        <div id="canvas"><div id="time">4:02 PM</div></div>
+        <div id="canvas"><div id="clock">4:02 PM</div></div>
     </div>
 
 </body>
