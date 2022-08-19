@@ -129,8 +129,9 @@ slider.addEventListener('click', () => {
     addCanvasListeners();
 })
 
-// window hiding via taskbar
+// window hiding 
 let tab = document.querySelector('.tab');
+let minimize = document.querySelector('#min');
 let windowOpen = true;
 function windowResize() {
     if (windowOpen === true) {
@@ -147,6 +148,7 @@ function windowResize() {
 }
 tab = document.querySelector('.tab');
 tab.addEventListener('click', windowResize);
+minimize.addEventListener('click', windowResize);
 
 // clock
 function startTime() {
