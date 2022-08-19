@@ -1,53 +1,43 @@
 let gridSize = 64;
-let pixelSize = (550) / gridSize;
+let pixelSize = (425) / gridSize;
 let drawing = false;
 let color = "black";
 let lastTool = "pencil";
-
 
 let row = document.createElement('div');
 let pixel = document.createElement('div');
 let canvas = document.querySelector('#canvas');
 
+
+
+// color picker
+let selectColor = document.querySelector('[type="color"]');
+selectColor.value = 'black'
+selectColor.addEventListener('input', (e) => {color = e.target.value});
+
+// tool selection
+document.querySelector('#pencil').addEventListener('click', () => {lastTool = "pencil"});
+document.querySelector('#rainbow').addEventListener('click', () => {lastTool = "rainbow"});
+document.querySelector('#eraser').addEventListener('click', () => {lastTool = "eraser"});
+
+// determine color based on active tool
 function getColor() {
     if (lastTool === "eraser") {
         return "white";
     } else if (lastTool === "rainbow") {
         return `rgba(${Math.round(Math.random()*255)}, 
                     ${Math.round(Math.random()*255)}, 
-                    ${Math.round(Math.random()*255, 1)})`;
+                    ${Math.round(Math.random()*255)}, 1)`;
     } else {
         return color;
     }
 }
 
-function onClick(e) {
-    e.currentTarget.style.backgroundColor = getColor();
-
-};
-function onDown(e) {
-    e.currentTarget.style.backgroundColor = getColor();
-    drawing = true;
-};
-
-function onHover(e) {
-    if (drawing === true) {
-        e.currentTarget.style.backgroundColor = getColor();
-}};
-function onUp() {
-    drawing = false;
-};
-function onDrag() {
-    drawing = true;
-};
-
-
+// canvas grid construction
 for (i=0; i<gridSize; i++) {
     row.className = "row";
-    // row.setAttribute("draggable", false);
     canvas.appendChild(row.cloneNode(true));
 }
-
 allRows = document.querySelectorAll('.row');
 allRows.forEach((node) => {
     for (i=0; i<gridSize; i++) {
@@ -60,6 +50,25 @@ allRows.forEach((node) => {
         node.appendChild(pixel.cloneNode(true));
 }});
 
+// canvas drawing
+function onClick(e) {
+    e.currentTarget.style.backgroundColor = getColor();
+
+};
+function onDown(e) {
+    e.currentTarget.style.backgroundColor = getColor();
+    drawing = true;
+};
+function onHover(e) {
+    if (drawing === true) {
+        e.currentTarget.style.backgroundColor = getColor();
+}};
+function onUp() {
+    drawing = false;
+};
+function onDrag() {
+    drawing = true;
+};
 document.querySelectorAll('.pixel').forEach( (node) => {
     node.addEventListener('click', onClick);
     node.addEventListener('mousedown', onDown);
@@ -68,9 +77,30 @@ document.querySelectorAll('.pixel').forEach( (node) => {
 });
 document.querySelector('html').addEventListener('mouseup', onUp);
 
-document.querySelector('#pencil').addEventListener('click', () => {lastTool = "pencil"});
-document.querySelector('#rainbow').addEventListener('click', () => {lastTool = "rainbow"});
-document.querySelector('#eraser').addEventListener('click', () => {lastTool = "eraser"});
+// window hiding via taskbar
+let tab = document.querySelector('.tab');
+let windowOpen = true;
+function windowResize() {
+    if (windowOpen === true) {
+        document.querySelector('#border').style.display = "none";
+        tab.style.webkitFilter = "brightness(100%)";
+        tab.style.borderBottom = "2px solid black";
+        tab.style.borderRight = "2px solid black";
+        tab.style.borderTop = "2px solid white";
+        tab.style.borderLeft = "2px solid white";
+        windowOpen = false;
+    } else {
+        document.getElementById('border').style.display = "inherit";
+        tab.style.webkitFilter = "";
+        tab.style.borderBottom = "";
+        tab.style.borderRight = "";
+        tab.style.borderTop = "";
+        tab.style.borderLeft = "";
+        windowOpen = true;
+    }
+}
+tab = document.querySelector('.tab');
+tab.addEventListener('click', windowResize);
 
 
 // clock
@@ -85,8 +115,7 @@ function startTime() {
     document.getElementById('clock').innerHTML =  h + ":" + m;
     setTimeout(startTime, 1000);
   }
-  
-  function checkTime(i) {
+function checkTime(i) {
     if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
     return i;
 }
